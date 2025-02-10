@@ -1,0 +1,108 @@
+﻿create database bd_projeto;
+use bd_projeto;
+
+
+CREATE TABLE Aparicao(
+    id_apa int primary key NOT NULL AUTO_INCREMENT,
+    Propriedade_apa VARCHAR(100),
+    Pasto_apa VARCHAR(50),
+    Animal_apa VARCHAR(100),
+    Situacao_apa VARCHAR(100),
+    Observacao_apa VARCHAR(50),
+    TransferirParaLote_apa VARCHAR(100),
+    DataTransferenciaLote_apa DATE
+);
+
+CREATE TABLE Classificacao(
+    id_cla int primary key NOT NULL AUTO_INCREMENT	,
+    NomeGrupo_cla VARCHAR(100),
+    Fase_cla VARCHAR(50),
+    Sexo_cla VARCHAR(100),
+    delimitacaoGrupo_cla DOUBLE,
+    producaoleiteminima_cla DOUBLE,
+    producaoleitemaxima_cla DOUBLE,
+    descricaogrupo_cla DOUBLE	
+);
+
+CREATE TABLE Endereco (
+	id_end int primary key NOT NULL AUTO_INCREMENT,
+    Rua_end VARCHAR(100),
+    Numero_end VARCHAR(50),
+    Bairro_end VARCHAR(100),
+    Cidade_end VARCHAR(100),
+    Estado_end VARCHAR(50),
+    CEP_end VARCHAR(20)
+);
+
+
+CREATE TABLE Fornecedor ( 
+id_for int primary key NOT NULL AUTO_INCREMENT,
+ NomeFantasia_for VARCHAR(100), 
+ RazaoSocial_for VARCHAR(100), 
+ CNPJ_for VARCHAR(20), 
+ Endereco_for VARCHAR(300),
+ Cidade_for VARCHAR(100),
+ Estado_for VARCHAR(100),
+ Telefone_for VARCHAR(20), 
+ Email_for VARCHAR(100), 
+ Responsavel_for VARCHAR(100) 
+ );
+ 
+ create table Produto (
+id_prod int primary key not null auto_increment,
+descricao_prod varchar (200),
+estoque_prod int,
+valor_prod float,
+dataValidade_prod date
+);
+
+
+ 
+ CREATE TABLE Equipamento ( 
+ Id_equi INT primary key NOT NULL AUTO_INCREMENT, 
+ Nome_equi VARCHAR(100),
+ Descricao_equi VARCHAR(255), 
+ Codigo_equi VARCHAR(50), 
+ Quantidade_equi INTEGER, 
+ Valor_equi DOUBLE, 
+ Fornecedor_equi VARCHAR(100),
+ Marca_equi VARCHAR(50), 
+ Ano_equi INTEGER, 
+ Estado_equi VARCHAR(50) 
+ );
+ 
+ CREATE TABLE Compra (
+    Id_comp INT primary key NOT NULL  AUTO_INCREMENT,
+    Fornecedor_comp VARCHAR(100),
+    DataCompra_comp DATE,
+    Produto_comp VARCHAR(100),
+    Quantidade_comp INTEGER,
+    PrecoUnitario_comp DOUBLE,
+    PrecoTotal_comp DOUBLE
+);
+
+
+CREATE TABLE Propriedade (
+    Id_prop INT primary key NOT NULL  AUTO_INCREMENT,
+    NomePropriedade_prop VARCHAR(100),
+    NomeProprietario_prop VARCHAR(100),
+    TamanhoHectares_prop DOUBLE,
+    CEP_prop DOUBLE,
+    Logradouro_prop DOUBLE,
+    Bairro_prop DOUBLE,
+    Complemento_prop DOUBLE
+);
+
+CREATE TABLE Transportador (
+    Id INT primary key NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    Nome VARCHAR(100),
+    CpfCnpj VARCHAR(20),
+    Estado VARCHAR(50),
+    inscricaoEstadual VARCHAR(50),
+    Cep VARCHAR(20),
+    Cidade VARCHAR(100),
+    Rua VARCHAR(100),
+    Bairro VARCHAR(100)
+);
+
+insert into Aparicao values (null, 'Propiedade-1','Pasto-1', 'Cavalo', '9 meses', 'ASD', 'Lote-2', '2020-01-01');
