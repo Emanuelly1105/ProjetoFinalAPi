@@ -10,53 +10,100 @@ namespace api_Aparicao.Controllers
     [ApiController]
     public class ApartacaoController : ControllerBase
     {
-          
+        List<Aparicao> listaApartacoes = new List<Aparicao>();
+
+        public ApartacaoController()
+        {
+            var aparicao1 = new Aparicao()
+            {
+               
+                Propriedade = "Fazenda Rancho rural",
+                Pasto = "Ruicem Apartados",
+                Animal = "Vaquinha mimosa",
+                Situacao = "Natural",
+                Observacao = "Nenhuma",
+                TransferirParaLote = "Lote A",
+                DataTransferenciaLote = new DateTime(2022, 11, 25)
+            };
+
+            listaApartacoes.Add(aparicao1);
+        }
 
         [HttpGet]
         public IActionResult Get()
         {
-            var Aparicao = new AparicaoDAO().List();
-
-            return Ok(Aparicao);
+            return Ok(listaApartacoes);
         }
 
-        
+        [HttpGet("{Id}")]
+        public IActionResult GetById(int id)
+        {
+            var apartacao = listaApartacoes.Where(item => item.Id == id).FirstOrDefault();
+
+            if (apartacao == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(apartacao);
+        }
 
         [HttpPost]
         public IActionResult Post([FromBody] AparicaoDTO item)
         {
-            var Aparicao = new Aparicao(); 
+            var contador = listaApartacoes.Count();
 
-            Aparicao.Id = item.Id;
-            Aparicao.Propriedade = item.Propriedade;
-            Aparicao.Pasto = item.Pasto;
-            Aparicao.Animal = item.Animal;
-            Aparicao.Situacao = item.Situacao;
-            Aparicao.Observacao = item.Observacao;
-            Aparicao.TransferirParaLote = item.TransferirParaLote;
-            Aparicao.DataTransferenciaLote = item.DataTransferenciaLote;
-                
-
-            try
+            var apartacao = new Aparicao
             {
-                var dao = new AparicaoDAO();
-                Aparicao.Id = dao.Insert(Aparicao);
-                
+                Id = contador + 1,
+                Propriedade = item.Propriedade,
+                Pasto = item.Pasto,
+                Animal = item.Animal,
+                Situacao = item.Situacao,
+                Observacao = item.Observacao,
+                TransferirParaLote = item.TransferirParaLote,
+                DataTransferenciaLote = item.DataTransferenciaLote
+            };
 
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            listaApartacoes.Add(apartacao);
 
-
-            return Created("", Aparicao);
-
-
-
+            return StatusCode(StatusCodes.Status201Created, apartacao);
         }
 
-        
-       
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, [FromBody] AparicaoDTO item)
+        {
+            var apartacao = listaApartacoes.Where(item => item.Id == id).FirstOrDefault();
+
+            if (apartacao == null)
+            {
+                return NotFound();
+            }
+
+            apartacao.Propriedade = item.Propriedade;
+            apartacao.Pasto = item.Pasto;
+            apartacao.Animal = item.Animal;
+            apartacao.Situacao = item.Situacao;
+            apartacao.Observacao = item.Observacao;
+            apartacao.TransferirParaLote = item.TransferirParaLote;
+            apartacao.DataTransferenciaLote = item.DataTransferenciaLote;
+
+            return Ok(apartacao);
+        }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var apartacao = listaApartacoes.Where(item => item.Id == id).FirstOrDefault();
+
+            if (apartacao == null)
+            {
+                return NotFound();
+            }
+
+            listaApartacoes.Remove(apartacao);
+
+            return Ok(apartacao);
+        }
     }
 }
